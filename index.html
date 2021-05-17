@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Php Cheat Sheet</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+    <link rel="stylesheet" href="prism.css">
+    <style>
+        .copy-to-clipboard-button {
+            border: 2px solid #fff !important;
+            font-size: 1em !important;
+            color: #fff !important;
+        }
+        code{
+            font-size: 10px !important;
+        }
+    </style>
+</head>
+
+<body>
+    <table class="table table-bordered table-dark">
+        <thead>
+            <tr>
+                <th scope="col">Function</th>
+                <th scope="col" colspan="3">Description</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="row">
+                    <pre class="language-php"><code>define("GREETING","Hello you! How are you today?"); 
+echo constant("GREETING");</code></pre>
+                </th>
+                <td colspan="3">The define() function defines a constant.
+                    <br>
+                    Constants are much like variables, except for the following differences:
+                    <br>
+                    1) A constant's value cannot be changed after it is set
+                    <br> 2) Constant names do not need a leading dollar sign ($)
+                    <br> 3) Constants can be accessed regardless of scope
+                    <br> 4) Constant values can only be strings and numbers
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row"> <pre class="language-php"><code>mysqli_connect(host, username, password, dbname, port, socket);</code></pre></th>
+                <td colspan="3"><table class="w3-table-all notranslate"> 
+                    <tbody><tr>
+                      <th style="width:20%">Parameter</th>
+                      <th style="width:80%">Description</th>
+                    </tr>  
+                    <tr>
+                      <td><em>host</em></td>
+                      <td>Optional. Specifies a host name or an IP address</td>
+                    </tr>
+                    <tr>
+                      <td><em>username</em></td>
+                      <td>Optional. Specifies the MySQL username</td>
+                    </tr>
+                    <tr>
+                      <td><em>password</em></td>
+                      <td>Optional. Specifies the MySQL password</td>
+                    </tr>
+                    <tr>
+                      <td><em>dbname</em></td>
+                      <td>Optional. Specifies the default database to be used</td>
+                    </tr>
+                    <tr>
+                      <td><em>port</em></td>
+                      <td>Optional. Specifies the port number to attempt to connect to the MySQL server</td>
+                    </tr>
+                    <tr>
+                      <td><em>socket</em></td>
+                      <td>Optional. Specifies the socket or named pipe to be used</td>
+                    </tr>
+                    </tbody></table>
+                    Return Value:	Returns an object representing the connection to the MySQL server <br>
+                     If return value is false than connection is not successfull
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row"><pre class="language-php"><code>require_once 'config.php';</code></pre></th>
+                <td colspan="3">The require_once keyword is used to embed PHP code from another file. If the file is not found, a fatal error is thrown and the program stops. If the file was already included previously, this statement will not include it again.
+
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row"><pre class="language-php"><code>if (empty($a)) {
+    echo "Variable 'a' is empty.<br>";
+}</code></pre></th>
+                <td colspan="3">The empty() function checks whether a variable is empty or not.
+<br>
+                    This function returns false if the variable exists and is not empty, otherwise it returns true.
+                    
+                    
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row"><pre class="language-php"><code>trim($str);</code></pre></th>
+                <td colspan="3">The trim() function removes whitespace and other predefined characters from both sides of a string.
+
+
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row"><pre class="language-php"><code>if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // collect value of input field
+    $name = $_POST['fname'];
+    if (empty($name)) {
+        echo "Name is empty";
+    } else {
+        echo $name;
+    }
+}</code></pre></th>
+                <td colspan="3">PHP $_POST is a PHP super global variable which is used to collect form data after submitting an HTML form with method="post". $_POST is also widely used to pass variables.
+
+
+
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row"><pre class="language-php"><code>mysqli_prepare(connection, query)</code></pre></th>
+                <td colspan="3"><table class="w3-table-all notranslate"> 
+                    <tbody><tr>
+                      <th style="width:20%">Parameter</th>
+                      <th style="width:80%">Description</th>
+                    </tr>  
+                    <tr>
+                      <td><em>connection</em></td>
+                      <td>Required. Specifies the MySQL connection to use</td>
+                    </tr>
+                    <tr>
+                      <td><em>query</em></td>
+                      <td>Required. Specifies an SQL query. <strong>Note:</strong> Do not add 
+                      semicolon to the end of the query!</td>
+                    </tr>
+                    </tbody></table>
+                    Return Value:	A statement object on success. FALSE on failure
+
+
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row"><pre class="language-php"><code>
+$servername = "localhost";
+$username = "username";
+$password = "password";
+$dbname = "myDB";
+
+// Create connection
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+// Check connection
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+// prepare and bind
+$stmt = $conn->prepare("INSERT INTO MyGuests (firstname, lastname, email) VALUES (?, ?, ?)");
+$stmt->bind_param("sss", $firstname, $lastname, $email);
+
+// set parameters and execute
+$firstname = "John";
+$lastname = "Doe";
+$email = "john@example.com";
+$stmt->execute();
+
+$firstname = "Mary";
+$lastname = "Moe";
+$email = "mary@example.com";
+$stmt->execute();
+
+$firstname = "Julie";
+$lastname = "Dooley";
+$email = "julie@example.com";
+$stmt->execute();
+
+echo "New records created successfully";
+
+$stmt->close();
+$conn->close();
+</code></pre></th>
+                <td colspan="3"><a href="https://www.w3schools.com/php/php_mysql_prepared_statements.asp">Click for more details</a>
+
+
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row"><pre class="language-php"><code>$a = 0;
+// True because $a is set
+if (isset($a)) {
+  echo "Variable 'a' is set.<br>";
+}
+
+$b = null;
+// False because $b is NULL
+if (isset($b)) {
+  echo "Variable 'b' is set.";
+}</code></pre></th>
+                <td colspan="3">The isset() function checks whether a variable is set, which means that it has to be declared and is not NULL.
+
+                    This function returns true if the variable exists and is not NULL, otherwise it returns false.
+                    
+                    
+
+
+                </td>
+
+            </tr>
+            <tr>
+                <th scope="row"><pre class="language-php"><code>$_SERVER['']</code></pre></th>
+                <td colspan="3"><table class="w3-table-all notranslate">
+                    <tbody><tr>
+                    <th style="width:35%">Element/Code</th>
+                    <th style="width:65%">Description</th>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['PHP_SELF']</td>
+                    <td>Returns the filename of the currently executing script</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['GATEWAY_INTERFACE']</td>
+                    <td>Returns the version of the Common Gateway Interface (CGI) the server is 
+                    using</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SERVER_ADDR']</td>
+                    <td>Returns the IP address of the host server</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SERVER_NAME']</td>
+                    <td>Returns the name of the host server (such as www.w3schools.com)</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SERVER_SOFTWARE']</td>
+                    <td>Returns the server identification string (such as Apache/2.2.24)</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SERVER_PROTOCOL']</td>
+                    <td>Returns the name and revision of the information protocol (such as HTTP/1.1)</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['REQUEST_METHOD']</td>
+                    <td>Returns the request method used to access the page (such as POST)</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['REQUEST_TIME']</td>
+                    <td>Returns the timestamp of the start of the request (such as 1377687496)</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['QUERY_STRING']</td>
+                    <td>Returns the query string if the page is accessed via a query string</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['HTTP_ACCEPT']</td>
+                    <td>Returns the Accept header from the current request </td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['HTTP_ACCEPT_CHARSET']</td>
+                    <td>Returns the Accept_Charset header from the current request (such as 
+                    utf-8,ISO-8859-1)</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['HTTP_HOST']</td>
+                    <td>Returns the Host header from the current request </td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['HTTP_REFERER']</td>
+                    <td>Returns the complete URL of the current page (not reliable because not all 
+                    user-agents support it)</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['HTTPS']</td>
+                    <td>Is the script queried through a secure HTTP protocol</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['REMOTE_ADDR']</td>
+                    <td>Returns the IP address from where the user is viewing the current page</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['REMOTE_HOST']</td>
+                    <td>Returns the Host name from where the user is viewing the current page</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['REMOTE_PORT']</td>
+                    <td>Returns the port being used on the user's machine to communicate with the 
+                    web server</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SCRIPT_FILENAME']</td>
+                    <td>Returns the absolute pathname of the currently executing script</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SERVER_ADMIN']</td>
+                    <td>Returns the value given to the SERVER_ADMIN directive in the web server 
+                    configuration file (if your script runs on a virtual host, it will be the value 
+                    defined for that virtual host) (such as someone@w3schools.com)</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SERVER_PORT']</td>
+                    <td>Returns the port on the server machine being used by the web server for 
+                    communication (such as 80)</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SERVER_SIGNATURE']</td>
+                    <td>Returns the server version and virtual host name which are added to 
+                    server-generated pages</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['PATH_TRANSLATED']</td>
+                    <td>Returns the file system based path to the current script</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SCRIPT_NAME']</td>
+                    <td>Returns the path of the current script</td>
+                    </tr>
+                    <tr>
+                    <td>$_SERVER['SCRIPT_URI']</td>
+                    <td>Returns the URI of the current page</td>
+                    </tr>
+                    </tbody></table>
+
+                </td>
+
+            </tr>
+        </tbody>
+    </table>
+</body>
+<script src="bootstrap.min.js"></script>
+<script src="prism.js"></script>
+
+</html>
